@@ -20,10 +20,10 @@ namespace RollbarSharp.Builders
             Configuration = configuration;
         }
 
-        public DataModel CreateExceptionNotice(Exception ex, string message = null, string level = "error")
+        public DataModel CreateExceptionNotice(Exception ex, string message = null, string level = "error", PersonModel personModel=null)
         {
             var body = BodyModelBuilder.CreateExceptionBody(ex);
-            var model = Create(level, body);
+            var model = Create(level, body, personModel);
             
             // if the exception has a fingerprint property, copy it to the notice
             if (!string.IsNullOrEmpty(body.Trace.Exception.Fingerprint))
@@ -37,9 +37,9 @@ namespace RollbarSharp.Builders
             return model;
         }
 
-        public DataModel CreateMessageNotice(string message, string level = "info", IDictionary<string, object> customData = null)
+        public DataModel CreateMessageNotice(string message, string level = "info", IDictionary<string, object> customData = null, PersonModel personModel = null)
         {
-            return Create(level, BodyModelBuilder.CreateMessageBody(message, customData));
+            return Create(level, BodyModelBuilder.CreateMessageBody(message, customData), personModel);
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace RollbarSharp.Builders
         /// <param name="level"></param>
         /// <param name="body"></param>
         /// <returns></returns>
-        protected DataModel Create(string level, BodyModel body)
+        protected DataModel Create(string level, BodyModel body, PersonModel personModel)
         {
             var model = new DataModel(level, body);
             
@@ -62,8 +62,8 @@ namespace RollbarSharp.Builders
             model.Notifier = NotifierModelBuilder.CreateFromAssemblyInfo();
 
             model.Request = RequestModelBuilder.CreateFromCurrentRequest();
-            model.Server = ServerModelBuilder.CreateFromCurrentRequest();
-            model.Person = PersonModelBuilder.CreateFromCurrentRequest();
+            model.Server = ServerModelBuilder.CreateFromCurrentRequest();            
+            model.Person = personModel ?? PersonModelBuilder.CreateFromCurrentRequest();
             
             return model;
         }

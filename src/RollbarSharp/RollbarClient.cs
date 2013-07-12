@@ -73,9 +73,9 @@ namespace RollbarSharp
         /// </summary>
         /// <param name="ex"></param>
         /// <param name="title"></param>
-        public void SendCriticalException(Exception ex, string title = null)
+        public void SendCriticalException(Exception ex, string title = null, PersonModel personModel = null)
         {
-            SendException(ex, title, "critical");
+            SendException(ex, title, "critical", personModel);
         }
 
         /// <summary>
@@ -83,9 +83,9 @@ namespace RollbarSharp
         /// </summary>
         /// <param name="ex"></param>
         /// <param name="title"></param>
-        public void SendErrorException(Exception ex, string title = null)
+        public void SendErrorException(Exception ex, string title = null, PersonModel personModel = null)
         {
-            SendException(ex, title, "error");
+            SendException(ex, title, "error", personModel);
         }
 
         /// <summary>
@@ -93,9 +93,9 @@ namespace RollbarSharp
         /// </summary>
         /// <param name="ex"></param>
         /// <param name="title"></param>
-        public void SendWarningException(Exception ex, string title = null)
+        public void SendWarningException(Exception ex, string title = null, PersonModel personModel = null)
         {
-            SendException(ex, title, "warning");
+            SendException(ex, title, "warning", personModel);
         }
 
         /// <summary>
@@ -105,9 +105,9 @@ namespace RollbarSharp
         /// <param name="ex"></param>
         /// <param name="title"></param>
         /// <param name="level">Default is "error". "critical" and "warning" may also make sense to use.</param>
-        public void SendException(Exception ex, string title = null, string level = "error")
+        public void SendException(Exception ex, string title = null, string level = "error", PersonModel personModel = null)
         {
-            var notice = NoticeBuilder.CreateExceptionNotice(ex, title, level);
+            var notice = NoticeBuilder.CreateExceptionNotice(ex, title, level, personModel);
             Send(notice);
         }
 
@@ -116,9 +116,9 @@ namespace RollbarSharp
         /// </summary>
         /// <param name="message"></param>
         /// <param name="customData"></param>
-        public void SendCriticalMessage(string message, IDictionary<string, object> customData = null)
+        public void SendCriticalMessage(string message, IDictionary<string, object> customData = null, PersonModel personModel = null)
         {
-            SendMessage(message, "critical", customData);
+            SendMessage(message, "critical", customData, personModel);
         }
 
         /// <summary>
@@ -126,9 +126,9 @@ namespace RollbarSharp
         /// </summary>
         /// <param name="message"></param>
         /// <param name="customData"></param>
-        public void SendErrorMessage(string message, IDictionary<string, object> customData = null)
+        public void SendErrorMessage(string message, IDictionary<string, object> customData = null, PersonModel personModel = null)
         {
-            SendMessage(message, "error", customData);
+            SendMessage(message, "error", customData, personModel);
         }
 
         /// <summary>
@@ -136,9 +136,9 @@ namespace RollbarSharp
         /// </summary>
         /// <param name="message"></param>
         /// <param name="customData"></param>
-        public void SendWarningMessage(string message, IDictionary<string, object> customData = null)
+        public void SendWarningMessage(string message, IDictionary<string, object> customData = null, PersonModel personModel = null)
         {
-            SendMessage(message, "warning", customData);
+            SendMessage(message, "warning", customData, personModel);
         }
 
         /// <summary>
@@ -146,9 +146,9 @@ namespace RollbarSharp
         /// </summary>
         /// <param name="message"></param>
         /// <param name="customData"></param>
-        public void SendInfoMessage(string message, IDictionary<string, object> customData = null)
+        public void SendInfoMessage(string message, IDictionary<string, object> customData = null, PersonModel personModel = null)
         {
-            SendMessage(message, "info", customData);
+            SendMessage(message, "info", customData, personModel);
         }
 
         /// <summary>
@@ -156,9 +156,9 @@ namespace RollbarSharp
         /// </summary>
         /// <param name="message"></param>
         /// <param name="customData"></param>
-        public void SendDebugMessage(string message, IDictionary<string, object> customData = null)
+        public void SendDebugMessage(string message, IDictionary<string, object> customData = null, PersonModel personModel = null)
         {
-            SendMessage(message, "debug", customData);
+            SendMessage(message, "debug", customData, personModel);
         }
 
         /// <summary>
@@ -167,9 +167,9 @@ namespace RollbarSharp
         /// <param name="message"></param>
         /// <param name="level"></param>
         /// <param name="customData"></param>
-        public void SendMessage(string message, string level, IDictionary<string, object> customData = null)
+        public void SendMessage(string message, string level, IDictionary<string, object> customData = null, PersonModel personModel = null)
         {
-            var notice = NoticeBuilder.CreateMessageNotice(message, level, customData);
+            var notice = NoticeBuilder.CreateMessageNotice(message, level, customData, personModel);
             Send(notice);
         }
 
